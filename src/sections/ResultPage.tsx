@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
-import { ArrowLeft, Download, Share2, ThumbsUp, AlertTriangle, Lightbulb, Clock, Rocket, Sparkles, Building2, MapPin, Wallet, Plus, Check } from 'lucide-react'
+import { ArrowLeft, Download, Share2, ThumbsUp, AlertTriangle, Lightbulb, Clock, Rocket, Sparkles, Building2, MapPin, Wallet, Plus, Check, Target, Monitor, Wrench, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import type { AnalysisData, JobRequirement } from '../App'
 import html2canvas from 'html2canvas'
@@ -246,6 +247,119 @@ export default function ResultPage({ data, job, onBack, onNewAnalysis }: ResultP
             </div>
           </CardContent>
         </Card>
+
+        {/* 岗位解析回顾 - PDF完整报告内容 */}
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">岗位解析</h2>
+          
+          {/* 一句话总结 */}
+          <Card className="mb-6 border-l-4 border-l-indigo-500 bg-gradient-to-r from-indigo-50/50 to-transparent">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 text-indigo-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-2">这个岗位到底要什么？</h3>
+                  <p className="text-slate-700 leading-relaxed">{job.summary}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* 核心内容网格 */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* 核心技能 */}
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg text-slate-900">
+                  <Target className="w-5 h-5 text-blue-600" />
+                  核心技能要求
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {job.coreSkills.map((skill, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-xs font-bold text-blue-600">{index + 1}</span>
+                      </div>
+                      <span className="text-slate-700 text-sm">{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* 软件工具 */}
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg text-slate-900">
+                  <Monitor className="w-5 h-5 text-purple-600" />
+                  需要掌握的软件
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {job.software.map((sw, index) => (
+                    <Badge 
+                      key={index} 
+                      variant="secondary"
+                      className="px-3 py-1.5 text-sm bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200"
+                    >
+                      {sw}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-sm text-slate-500 mt-4">
+                  不需要全会，但至少要有2-3个是精通的
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* 主要工作内容 */}
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg text-slate-900">
+                  <Wrench className="w-5 h-5 text-green-600" />
+                  主要工作内容
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {job.keyResponsibilities.map((resp, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 flex-shrink-0" />
+                      <span className="text-slate-700 text-sm">{resp}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* 岗位难点 */}
+            <Card className="border-orange-200 bg-gradient-to-br from-orange-50/30 to-amber-50/20">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-lg text-orange-700">
+                  <AlertCircle className="w-5 h-5" />
+                  这个岗位的难点
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {job.challenges.map((challenge, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-xs font-bold text-orange-600">{index + 1}</span>
+                      </div>
+                      <span className="text-slate-700 text-sm">{challenge}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
 
         {/* 顶部概览区 */}
         <div className="grid lg:grid-cols-2 gap-8 mb-10">
