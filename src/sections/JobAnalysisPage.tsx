@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Building2, MapPin, Wallet, Wrench, Monitor, Target, AlertCircle, Sparkles, Plus } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Building2, MapPin, Wallet, Wrench, Monitor, Target, AlertCircle, Sparkles, Plus, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -74,6 +74,29 @@ export default function JobAnalysisPage({ job, hasResume, onViewResult, onBack, 
             </div>
           </CardContent>
         </Card>
+
+        {/* 行业黑话解读 */}
+        {job.jargon && job.jargon.length > 0 && (
+          <Card className="mb-8 border-l-4 border-l-amber-400 bg-gradient-to-r from-amber-50/30 to-transparent">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-5 h-5 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-slate-900 mb-3">这些术语是什么意思？</h3>
+                  <ul className="space-y-3">
+                    {job.jargon.map((item, index) => (
+                      <li key={index} className="text-slate-700 text-sm leading-relaxed">
+                        <span className="font-semibold text-amber-700">{index + 1}.</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* 核心内容网格 */}
         <div className="grid lg:grid-cols-2 gap-6 mb-8">
