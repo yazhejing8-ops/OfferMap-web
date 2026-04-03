@@ -224,16 +224,10 @@ function App() {
   }
 
   const handleNewAnalysis = () => {
-    // 清除数据并开始新的分析
+    // 在新的标签页开启新的分析，不覆盖当前页面
     localStorage.removeItem(STORAGE_KEY)
-    setJobData(null)
-    setResumeData(null)
-    setMatchData(null)
-    // 清除 URL 中的 shareId
-    if (window.history.replaceState) {
-      window.history.replaceState({}, document.title, window.location.pathname)
-    }
-    setCurrentPage('upload')
+    const newUrl = window.location.origin + window.location.pathname
+    window.open(newUrl, '_blank')
   }
 
   const handleLogin = (loggedInUser: User) => {
