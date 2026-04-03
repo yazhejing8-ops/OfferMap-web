@@ -23,6 +23,7 @@ export type JobRequirement = {
   software: string[]
   keyResponsibilities: string[]
   challenges: string[]
+  jargon: string[]
   summary: string
 }
 
